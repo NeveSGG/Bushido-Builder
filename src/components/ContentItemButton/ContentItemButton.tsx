@@ -1,9 +1,10 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 
 import Button, { ButtonProps, buttonClasses } from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 
 import FontIcon from '../FontIcon'
+import truncateString from '../../helpers/truncateString'
 
 const CustomMuiButtonBase = styled(Button)<ButtonProps>(({ theme }) => ({
   boxShadow: 'none',
@@ -13,10 +14,12 @@ const CustomMuiButtonBase = styled(Button)<ButtonProps>(({ theme }) => ({
   borderColor: 'rgba(255, 255, 255, 0.12)',
   backgroundColor: theme.palette.background.default,
   textTransform: 'unset',
-  width: 'min-content',
+  lineHeight: '19px',
+  padding: '10px 10px 10px 10px',
+  width: '90px',
+  gap: '10px',
+  height: '120px',
   [`& .${buttonClasses.startIcon}`]: {
-    paddingTop: 10,
-    paddingBottom: 10,
     marginLeft: 'unset',
     marginRight: 'unset',
   },
@@ -37,7 +40,15 @@ const CustomMuiButtonBase = styled(Button)<ButtonProps>(({ theme }) => ({
   },
 }))
 
+const rawText = 'Текстовый'
+const textLength = 17
+
 const ContentItemButton: FC = () => {
+  const textToShow = useMemo(
+    () => truncateString(rawText, textLength),
+    [rawText, textLength]
+  )
+
   return (
     <CustomMuiButtonBase
       variant="outlined"
@@ -45,7 +56,7 @@ const ContentItemButton: FC = () => {
       startIcon={<FontIcon />}
       color="success"
     >
-      Текстовый текст здоровый f ye nfr yjhv? gj`lqn`
+      {textToShow}
     </CustomMuiButtonBase>
   )
 }

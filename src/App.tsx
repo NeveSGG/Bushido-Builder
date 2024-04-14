@@ -1,6 +1,6 @@
-import { Box, Container, Typography } from '@mui/material'
-import FontIcon from './components/FontIcon'
-import ContentItemButton from './components/ContentItemButton'
+import { Box, Container, Typography } from "@mui/material";
+import FontIcon from "./components/FontIcon";
+import ContentItemButton from "./components/ContentItemButton";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
         <ContentItemButton />
       </Box>
     </Container>
-  )
+  );
 }
 
-export default App
+export default App;
