@@ -27,5 +27,7 @@ module.exports = {
     '@typescript-eslint/no-inferrable-types': 'off',
     'no-inferrable-types': 'off',
     'import/prefer-default-export': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
-};
+}
