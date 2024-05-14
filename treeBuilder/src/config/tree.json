@@ -1,7 +1,58 @@
 [
   {
-    "name": "HelloBlock",
-    "description": "Hello World Text Block",
+    "name": "Контейнер 1",
+    "folderName": "container",
+    "attributes": [
+      {
+        "name": "key",
+        "value": "container_1"
+      }
+    ],
+    "children": [
+      {
+        "name": "Hello block",
+        "folderName": "helloBlock",
+        "attributes": [
+          {
+            "name": "key",
+            "value": "hello_block_1"
+          }
+        ],
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Контейнер 3",
+    "folderName": "container",
+    "attributes": [
+      {
+        "name": "key",
+        "value": "container_3"
+      }
+    ],
+    "children": []
+  },
+  {
+    "name": "Контейнер 2",
+    "folderName": "container",
+    "attributes": [
+      {
+        "name": "key",
+        "value": "container_2"
+      }
+    ],
+    "children": []
+  },
+  {
+    "name": "Hello block",
+    "folderName": "helloBlock",
+    "attributes": [
+      {
+        "name": "key",
+        "value": "hello_block_2"
+      }
+    ],
     "children": []
   }
 ]

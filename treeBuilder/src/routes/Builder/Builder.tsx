@@ -101,7 +101,11 @@ const Builder: FC = () => {
                   }}
                 >
                   {containers.map((item, index) => (
-                    <ContentContainer id={item.id} index={index} />
+                    <ContentContainer
+                      id={item.id}
+                      key={item.id}
+                      index={index}
+                    />
                   ))}
                   {provided.placeholder}
                 </Box>

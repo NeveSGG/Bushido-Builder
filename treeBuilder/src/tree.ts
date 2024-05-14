@@ -1,6 +1,12 @@
+interface IAttribute {
+  name: string
+  value: string | number | boolean | null | undefined
+}
+
 export interface TreeElement {
   name: string
-  description: string
+  folderName: string
+  attributes: Array<IAttribute>
   children: Array<TreeElement>
 }
 

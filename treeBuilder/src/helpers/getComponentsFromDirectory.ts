@@ -1,21 +1,37 @@
+import React, { ReactElement } from 'react'
 import tree from '../tree'
 
-interface CompiledComponentIdentifier {
-  name: string
+interface ImportedCompiledComponent {
+  default(param: typeof React): ReactElement
 }
 
-export default function getComponentsFromDirectory(componentsFolder: string) {
-  const files: Map<CompiledComponentIdentifier, any> = new Map()
+export type ElementsMap = Map<string, (param: typeof React) => ReactElement>
 
-  return new Promise<Map<CompiledComponentIdentifier, any>>(
-    (resolve, reject) => {
-      import('../../../compiledComponents/helloBlock')
-        .then((module) => {
-          files.set(tree[0], module.default)
+export default async function getComponentsFromDirectory(
+  componentsFolder: string
+): Promise<ElementsMap> {
+  return new Promise((resolve, reject) => {
+    const files: ElementsMap = new Map()
 
-          resolve(files)
-        })
-        .catch((err) => reject(err))
-    }
-  )
+    Promise.all(
+      tree.map((treeElement) => {
+        return import(
+          `../../../${componentsFolder}/${treeElement.folderName}/index.js`
+        )
+          .then((module: ImportedCompiledComponent) => {
+            const { name, folderName } = treeElement
+            files.set(`${name}-${folderName}`, module.default)
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      })
+    )
+      .then(() => {
+        resolve(files)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
 }
