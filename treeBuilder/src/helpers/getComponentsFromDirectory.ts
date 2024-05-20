@@ -16,7 +16,8 @@ export default async function getComponentsFromDirectory(
     Promise.all(
       tree.map((treeElement) => {
         return import(
-          `../../../${componentsFolder}/${treeElement.folderName}/index.js`
+          /* @vite-ignore */
+          `/${componentsFolder}/${treeElement.folderName}/index.js`
         )
           .then((module: ImportedCompiledComponent) => {
             const { name, folderName } = treeElement

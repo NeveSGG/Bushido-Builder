@@ -1,6 +1,6 @@
 interface IAttribute {
   name: string
-  value: string | number | boolean | null | undefined
+  value: string | number | boolean | Record<string, string> | null | undefined
 }
 
 export interface TreeElement {

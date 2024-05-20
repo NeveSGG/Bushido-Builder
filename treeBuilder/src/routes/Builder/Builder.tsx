@@ -128,22 +128,6 @@ const Builder: FC = () => {
                 Добавить блок
               </Button>
 
-              {/* <Button
-                variant="outlined"
-                onClick={() => {
-                  
-                }}
-                sx={{
-                  mt: 2,
-                  justifyContent: 'flex-start',
-                }}
-                color="error"
-                size="small"
-                startIcon={<CloseIcon />}
-              >
-                Закрыть построитель
-              </Button> */}
-
               <Button
                 variant="outlined"
                 onClick={() => previewRender()}

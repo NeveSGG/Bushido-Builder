@@ -1,6 +1,6 @@
 const HelloBlock = (react) => {
-  return <h1 onClick={() => console.log("wow")}>Hello, world!</h1>;
-};
+  return <h1 onClick={() => console.log('wow')}>Hello, world!</h1>
+}
 
 const Container = (react) => {
   return (
@@ -8,7 +8,7 @@ const Container = (react) => {
       child1
       <HelloBlock react={react} />
     </div>
-  );
-};
+  )
+}
 
-export default Container;
+export default Container
