@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, MouseEvent } from "react";
 import {
   Alert,
   Box,
@@ -34,16 +34,19 @@ import {
   DragDropContext,
   Draggable,
   Droppable,
+  DropResult,
   resetServerContext,
 } from "react-beautiful-dnd";
-import { propSchema, treeSchema } from "@/utils/schemas/treeSchema";
+import {
+  propSchema,
+  treeElementSchema,
+  treeSchema,
+} from "@/utils/schemas/treeSchema";
 import { z } from "zod";
 import AddElementModal, { CustomMuiButtonBase } from "@/modals/AddElementModal";
 import Element from "./Element";
-
-interface IContentContainer {
-  id: number;
-}
+import EditElementModal from "@/modals/EditElementModal";
+import DeleteElementModal from "@/modals/DeleteElementModal";
 
 function reorder<T>(
   list: Array<T>,
@@ -67,8 +70,11 @@ const Builder: FC = () => {
     useState<boolean>(false);
   const [deleteContainerModalOpen, setDeleteContainerModalOpen] =
     useState<boolean>(false);
-
   const [addElementModalOpen, setAddElementModalOpen] =
+    useState<boolean>(false);
+  const [editElementModalOpen, setEditElementModalOpen] =
+    useState<boolean>(false);
+  const [deleteElementModalOpen, setDeleteElementModalOpen] =
     useState<boolean>(false);
 
   const [containerIndexToEditElement, setContainerIndexToEditElement] =
@@ -82,6 +88,12 @@ const Builder: FC = () => {
   const [elementIndexToAdd, setElementIndexToAdd] = useState<number | null>(
     null
   );
+  const [elementIndexToEdit, setElementIndexToEdit] = useState<number | null>(
+    null
+  );
+  const [elementIndexToDelete, setElementIndexToDelete] = useState<
+    number | null
+  >(null);
 
   const [notificationOpened, setNotificationOpened] = useState<boolean>(false);
   const [notificationMsg, setNotificationMsg] = useState<string>("");
@@ -127,25 +139,95 @@ const Builder: FC = () => {
     };
   }, [unsavedChanges]);
 
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination, type, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    const sourceIndex = source.index;
+    const destIndex = destination.index;
+
+    const sourceDroppableId = source.droppableId;
+    const destDroppableId = destination.droppableId;
+
+    if (sourceIndex === destIndex && sourceDroppableId === destDroppableId)
+      return;
+
+    switch (type) {
+      case "droppable-container": {
+        setTree((oldTree) => {
+          const newItems = Array.from(oldTree!);
+          const [reOrdered] = newItems.splice(sourceIndex - 1, 1);
+          newItems.splice(destIndex - 1, 0, reOrdered);
+          return newItems;
+        });
+        setUnsavedChanges(true);
+
+        break;
+      }
+      default: {
+        let sourceElement: z.infer<typeof treeElementSchema> | undefined;
+        let destElement: z.infer<typeof treeElementSchema> | undefined;
+
+        let containerSourceInd: number | undefined;
+        let containerDestInd: number | undefined;
+        let elementSourceInd: number | undefined;
+        let elementDestInd: number | undefined;
+
+        tree!.forEach((container, containerInd) => {
+          container.children.forEach((element, elementInd) => {
+            if (element.id.toString() === sourceDroppableId) {
+              sourceElement = structuredClone(element);
+
+              containerSourceInd = containerInd;
+              elementSourceInd = elementInd;
+            }
+
+            if (element.id.toString() === destDroppableId) {
+              destElement = structuredClone(element);
+
+              containerDestInd = containerInd;
+              elementDestInd = elementInd;
+            }
+          });
+        });
+
+        if (
+          !sourceElement ||
+          !destElement ||
+          typeof containerSourceInd !== "number" ||
+          typeof containerDestInd !== "number" ||
+          typeof elementSourceInd !== "number" ||
+          typeof elementDestInd !== "number" ||
+          sourceElement.name === destElement.name
+        )
+          return;
+
+        setTree((oldTree) => {
+          const newTree = Array.from(oldTree!);
+
+          newTree[containerSourceInd!].children[elementSourceInd!] =
+            destElement!;
+
+          newTree[containerDestInd!].children[elementDestInd!] = sourceElement!;
+
+          return newTree;
+        });
+
+        setUnsavedChanges(true);
+
+        break;
+      }
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container>
-        <DragDropContext
-          onDragEnd={(result) => {
-            const { destination, source } = result;
-
-            if (!destination) return;
-
-            setTree((oldTree) => {
-              const newItems = Array.from(oldTree!);
-              const [reOrdered] = newItems.splice(source.index - 1, 1);
-              newItems.splice(destination.index - 1, 0, reOrdered);
-              return newItems;
-            });
-            setUnsavedChanges(true);
-          }}
-        >
+        <DragDropContext onDragEnd={onDragEnd}>
           <Box sx={{ display: "flex" }}>
             <Box
               component="main"
@@ -228,6 +310,18 @@ const Builder: FC = () => {
                                         setElementIndexToAdd={
                                           setElementIndexToAdd
                                         }
+                                        onEditClick={() => {
+                                          setElementIndexToEdit(columnItem.id);
+                                          setContainerIndexToEditElement(id);
+                                          setEditElementModalOpen(true);
+                                        }}
+                                        onDeleteClick={() => {
+                                          setElementIndexToDelete(
+                                            columnItem.id
+                                          );
+                                          setContainerIndexToEditElement(id);
+                                          setDeleteElementModalOpen(true);
+                                        }}
                                       />
                                     )
                                   )}
@@ -328,7 +422,6 @@ const Builder: FC = () => {
                     axios
                       .post("/api/edit-json-tree", tree)
                       .then((response) => {
-                        console.log(response);
                         setUnsavedChanges(false);
 
                         setNotificationMsg("Изменения сохранены");
@@ -534,6 +627,24 @@ const Builder: FC = () => {
                       value: 1,
                     };
                   });
+
+                  const childrenLength = newTree[itemIndex].children.length;
+                  newTree[itemIndex].children = Array.from(
+                    { length: 1 },
+                    (_item, index) => {
+                      if (index < childrenLength) {
+                        return newTree[itemIndex].children[index];
+                      } else {
+                        return {
+                          id: Math.floor(100000 + Math.random() * 900000),
+                          name: "Void",
+                          attributes: [],
+                          props: [],
+                          children: [],
+                        };
+                      }
+                    }
+                  );
                 }
 
                 return newTree;
@@ -573,6 +684,24 @@ const Builder: FC = () => {
                       value: 2,
                     };
                   });
+
+                  const childrenLength = newTree[itemIndex].children.length;
+                  newTree[itemIndex].children = Array.from(
+                    { length: 2 },
+                    (_item, index) => {
+                      if (index < childrenLength) {
+                        return newTree[itemIndex].children[index];
+                      } else {
+                        return {
+                          id: Math.floor(100000 + Math.random() * 900000),
+                          name: "Void",
+                          attributes: [],
+                          props: [],
+                          children: [],
+                        };
+                      }
+                    }
+                  );
                 }
 
                 return newTree;
@@ -612,6 +741,24 @@ const Builder: FC = () => {
                       value: 3,
                     };
                   });
+
+                  const childrenLength = newTree[itemIndex].children.length;
+                  newTree[itemIndex].children = Array.from(
+                    { length: 3 },
+                    (_item, index) => {
+                      if (index < childrenLength) {
+                        return newTree[itemIndex].children[index];
+                      } else {
+                        return {
+                          id: Math.floor(100000 + Math.random() * 900000),
+                          name: "Void",
+                          attributes: [],
+                          props: [],
+                          children: [],
+                        };
+                      }
+                    }
+                  );
                 }
 
                 return newTree;
@@ -683,7 +830,7 @@ const Builder: FC = () => {
                     id: Math.floor(100000 + Math.random() * 900000),
                     name: "Text",
                     attributes: [],
-                    props: [],
+                    props,
                     children: [],
                   };
 
@@ -709,6 +856,88 @@ const Builder: FC = () => {
             icon: "add_circle",
           },
         ]}
+      />
+
+      <EditElementModal
+        open={editElementModalOpen}
+        handleClose={() => {
+          setEditElementModalOpen(false);
+          setContainerIndexToEditElement(null);
+          setElementIndexToEdit(null);
+        }}
+        handleSave={(params) => {
+          setTree((oldTree) => {
+            const newTree = Array.from(oldTree!);
+
+            const containerIndex = newTree.findIndex(
+              (i) => i.id === containerIndexToEditElement
+            );
+            if (containerIndex === -1) return newTree;
+
+            const elementIndex = newTree[containerIndex].children.findIndex(
+              (i) => i.id === elementIndexToEdit
+            );
+            if (elementIndex === -1) return newTree;
+
+            newTree[containerIndex].children[elementIndex].props = params;
+
+            return newTree;
+          });
+
+          setUnsavedChanges(true);
+        }}
+        props={(function () {
+          if (tree === null) return [];
+
+          const containerIndex = tree.findIndex(
+            (i) => i.id === containerIndexToEditElement
+          );
+          if (containerIndex === -1) return [];
+
+          const elementIndex = tree[containerIndex].children.findIndex((i) => {
+            return i.id === elementIndexToEdit;
+          });
+          if (elementIndex === -1) return [];
+
+          return tree[containerIndex].children[elementIndex].props;
+        })()}
+      />
+
+      <DeleteElementModal
+        open={deleteElementModalOpen}
+        handleClose={() => {
+          setDeleteElementModalOpen(false);
+          setContainerIndexToEditElement(null);
+          setElementIndexToDelete(null);
+        }}
+        deleteHandle={() => {
+          setTree((oldTree) => {
+            const newTree = Array.from(oldTree!);
+
+            const containerIndex = newTree.findIndex(
+              (i) => i.id === containerIndexToEditElement
+            );
+            if (containerIndex === -1) return newTree;
+
+            const elementIndex = newTree[containerIndex].children.findIndex(
+              (i) => i.id === elementIndexToDelete
+            );
+            if (elementIndex === -1) return newTree;
+
+            newTree[containerIndex].children.splice(elementIndex, 1, {
+              id: Math.floor(100000 + Math.random() * 900000),
+              name: "Void",
+              attributes: [],
+              props: [],
+              children: [],
+            });
+
+            return newTree;
+          });
+          setUnsavedChanges(true);
+          setElementIndexToDelete(null);
+          setDeleteElementModalOpen(false);
+        }}
       />
 
       <Snackbar

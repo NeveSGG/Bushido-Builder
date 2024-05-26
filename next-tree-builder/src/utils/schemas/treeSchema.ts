@@ -23,8 +23,9 @@ type TreeElement = z.infer<typeof baseTreeElementSchema> & {
   children: Array<TreeElement>;
 };
 
-const treeElementSchema: z.ZodType<TreeElement> = baseTreeElementSchema.extend({
-  children: z.lazy(() => treeElementSchema.array()),
-});
+export const treeElementSchema: z.ZodType<TreeElement> =
+  baseTreeElementSchema.extend({
+    children: z.lazy(() => treeElementSchema.array()),
+  });
 
 export const treeSchema = z.array(treeElementSchema);

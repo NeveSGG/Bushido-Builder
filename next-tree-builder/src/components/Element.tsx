@@ -1,8 +1,10 @@
 import theme from "@/theme";
-import { Box, Divider, Icon, IconButton } from "@mui/material";
+import { Box, Divider, Icon, IconButton, Stack } from "@mui/material";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
 
 import AddIcon from "@mui/icons-material/Add";
-import { FC } from "react";
+import { FC, MouseEvent } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
 interface IProps {
@@ -13,6 +15,9 @@ interface IProps {
   setAddElementModalOpen(param: any): any;
   setContainerIndexToEditElement(param: any): any;
   setElementIndexToAdd(param: any): any;
+
+  onEditClick(param: MouseEvent): any;
+  onDeleteClick(param: MouseEvent): any;
 }
 
 const Element: FC<IProps> = ({
@@ -23,9 +28,11 @@ const Element: FC<IProps> = ({
   setAddElementModalOpen,
   setContainerIndexToEditElement,
   setElementIndexToAdd,
+  onEditClick,
+  onDeleteClick,
 }) => {
   return (
-    <Droppable droppableId={columnItem.id.toString()} type="droppable-element">
+    <Droppable droppableId={columnItem.id.toString()} type="element-droppable">
       {(containerDroppableProvider) => (
         <Box
           display="flex"
@@ -40,31 +47,24 @@ const Element: FC<IProps> = ({
               draggableId={columnItem.id.toString()}
               index={columnItemIndex}
             >
-              {(draggableProvider) => (
+              {(draggableProvider, draggableSnapshot) => (
                 <Box
                   sx={{
+                    position: "relative",
                     boxShadow: "none",
                     display: "flex",
                     flexDirection: "column",
                     color: theme.palette.text.primary,
-                    borderColor: "rgba(255, 255, 255, 0.12)",
-                    backgroundColor: theme.palette.background.default,
                     textTransform: "unset",
                     lineHeight: "19px",
                     padding: "10px 10px 10px 10px",
                     gap: "10px",
-                    "&:hover": {
-                      color: theme.palette.text.primary,
-                      boxShadow: "none",
-                      borderColor: "rgba(255, 255, 255, 0.12)",
-                      backgroundColor: theme.palette.background.paper,
-                    },
-                    "&:active": {
-                      color: theme.palette.text.primary,
-                      boxShadow: "none",
-                      borderColor: "rgba(255, 255, 255, 0.8)",
-                      backgroundColor: theme.palette.background.paper,
-                    },
+                    borderColor: draggableSnapshot.isDragging
+                      ? "rgba(255, 255, 255, 0.8)"
+                      : "rgba(255, 255, 255, 0.12)",
+                    backgroundColor: draggableSnapshot.isDragging
+                      ? "rgba(255, 255, 255, 0.5)"
+                      : theme.palette.background.default,
                     width: "100%",
                     height: "200px",
                     borderRadius: "8px",
@@ -76,8 +76,32 @@ const Element: FC<IProps> = ({
                     ...draggableProvider.draggableProps.style,
                   }}
                 >
-                  <Icon>add_circle</Icon>
                   Текстовый блок
+                  <Stack
+                    sx={{
+                      position: "absolute",
+                      top: "5px",
+                      right: "5px",
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "10px",
+                    }}
+                  >
+                    <IconButton
+                      color="secondary"
+                      size="small"
+                      onClick={onEditClick}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      color="error"
+                      size="small"
+                      onClick={onDeleteClick}
+                    >
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                  </Stack>
                 </Box>
               )}
             </Draggable>

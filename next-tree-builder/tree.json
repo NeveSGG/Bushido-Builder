@@ -18,15 +18,15 @@
                 "children": []
             },
             {
-                "id": 452382,
-                "name": "Text",
+                "id": 407566,
+                "name": "Void",
                 "attributes": [],
                 "props": [],
                 "children": []
             },
             {
-                "id": 110110,
-                "name": "Text",
+                "id": 475630,
+                "name": "Void",
                 "attributes": [],
                 "props": [],
                 "children": []
@@ -39,20 +39,13 @@
         "attributes": [
             {
                 "name": "data-container-type",
-                "value": 2
+                "value": 1
             }
         ],
         "props": [],
         "children": [
             {
                 "id": 576227,
-                "name": "Void",
-                "attributes": [],
-                "props": [],
-                "children": []
-            },
-            {
-                "id": 407566,
                 "name": "Void",
                 "attributes": [],
                 "props": [],
