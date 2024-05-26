@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1323,
+    "name": "Контейнер 1",
+    "attributes": [
+      {
+        "name": "key",
+        "value": "container_1"
+      }
+    ],
+    "children": [
+      {
+        "id": 12378,
+        "name": "Hello block",
+        "attributes": [
+          {
+            "name": "key",
+            "value": "hello_block_1"
+          }
+        ],
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": 2222,
+    "name": "Контейнер 3",
+    "attributes": [
+      {
+        "name": "key",
+        "value": "container_3"
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": 3333,
+    "name": "Контейнер 2",
+    "attributes": [
+      {
+        "name": "key",
+        "value": "container_2"
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": 9999,
+    "name": "Hello block",
+    "attributes": [
+      {
+        "name": "key",
+        "value": "hello_block_2"
+      }
+    ],
+    "children": []
+  }
+]
