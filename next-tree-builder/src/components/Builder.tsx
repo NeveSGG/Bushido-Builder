@@ -39,6 +39,7 @@ import {
 import { propSchema, treeSchema } from "@/utils/schemas/treeSchema";
 import { z } from "zod";
 import AddElementModal, { CustomMuiButtonBase } from "@/modals/AddElementModal";
+import Element from "./Element";
 
 interface IContentContainer {
   id: number;
@@ -153,7 +154,10 @@ const Builder: FC = () => {
                 p: 2,
               }}
             >
-              <Droppable droppableId="containersDroppable">
+              <Droppable
+                droppableId="containersDroppable"
+                type="droppable-container"
+              >
                 {(provided) => (
                   <Box
                     {...provided.droppableProps}
@@ -185,7 +189,7 @@ const Builder: FC = () => {
                             <Draggable
                               key={id}
                               draggableId={`container_${id}`}
-                              index={index + 1}
+                              index={index}
                             >
                               {(draggableProvided) => (
                                 <Box
@@ -209,52 +213,22 @@ const Builder: FC = () => {
                                 >
                                   {children.map(
                                     (columnItem, columnItemIndex) => (
-                                      <Box
-                                        key={`item_${columnItem.id}`}
-                                        display="flex"
-                                        sx={{
-                                          width: `calc(100% / ${columns})`,
-                                        }}
-                                      >
-                                        {columnItem.name !== "Void" ? (
-                                          <CustomMuiButtonBase
-                                            variant="outlined"
-                                            disableRipple
-                                            startIcon={<Icon>add_circle</Icon>}
-                                          >
-                                            Текстовый блок
-                                          </CustomMuiButtonBase>
-                                        ) : (
-                                          <IconButton
-                                            sx={{
-                                              width: "100%",
-                                              height: "200px",
-                                              borderRadius: "8px",
-                                            }}
-                                            onClick={() => {
-                                              setAddElementModalOpen(true);
-                                              setContainerIndexToEditElement(
-                                                id
-                                              );
-                                              setElementIndexToAdd(
-                                                columnItem.id
-                                              );
-                                            }}
-                                            color="secondary"
-                                          >
-                                            <AddIcon />
-                                          </IconButton>
-                                        )}
-
-                                        {columnItemIndex !== columns - 1 ? (
-                                          <Divider
-                                            orientation="vertical"
-                                            variant="middle"
-                                            flexItem
-                                            sx={{ borderRightWidth: "2px" }}
-                                          />
-                                        ) : null}
-                                      </Box>
+                                      <Element
+                                        key={`${id}-columnItemIndex-aaa`}
+                                        columnItem={columnItem}
+                                        columnItemIndex={columnItemIndex}
+                                        columns={columns}
+                                        id={id}
+                                        setAddElementModalOpen={
+                                          setAddElementModalOpen
+                                        }
+                                        setContainerIndexToEditElement={
+                                          setContainerIndexToEditElement
+                                        }
+                                        setElementIndexToAdd={
+                                          setElementIndexToAdd
+                                        }
+                                      />
                                     )
                                   )}
                                   <IconButton
@@ -712,6 +686,8 @@ const Builder: FC = () => {
                     props: [],
                     children: [],
                   };
+
+                  setUnsavedChanges(true);
 
                   return newTree;
                 });

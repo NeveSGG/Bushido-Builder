@@ -175,13 +175,16 @@ const AddElementModal: FC<IProps> = ({ open, handleClose, options }) => {
 
               <Button
                 onClick={() => {
-                  const option = options.find((opt) => {
-                    opt.key === selectedElementKey;
-                  });
+                  const option = options.find(
+                    (opt) => opt.key === selectedElementKey
+                  );
 
                   if (option && option.choiceHandler) {
-                    console.log("hi");
                     option.choiceHandler(filledData.get(selectedElementKey!)!);
+
+                    if (handleClose) {
+                      handleClose();
+                    }
                   }
                 }}
               >
