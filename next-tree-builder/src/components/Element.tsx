@@ -25,11 +25,7 @@ const Element: FC<IProps> = ({
   setElementIndexToAdd,
 }) => {
   return (
-    <Droppable
-      droppableId={`container_${id}_droppable_id`}
-      key={`item_${columnItem.id}`}
-      type="droppable-element"
-    >
+    <Droppable droppableId={columnItem.id.toString()} type="droppable-element">
       {(containerDroppableProvider) => (
         <Box
           display="flex"
@@ -41,7 +37,7 @@ const Element: FC<IProps> = ({
         >
           {columnItem.name !== "Void" ? (
             <Draggable
-              draggableId={`container_${id}_draggable_id`}
+              draggableId={columnItem.id.toString()}
               index={columnItemIndex}
             >
               {(draggableProvider) => (

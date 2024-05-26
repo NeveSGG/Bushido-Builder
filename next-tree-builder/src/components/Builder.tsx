@@ -188,7 +188,7 @@ const Builder: FC = () => {
                           return (
                             <Draggable
                               key={id}
-                              draggableId={`container_${id}`}
+                              draggableId={id.toString()}
                               index={index}
                             >
                               {(draggableProvided) => (
@@ -214,7 +214,7 @@ const Builder: FC = () => {
                                   {children.map(
                                     (columnItem, columnItemIndex) => (
                                       <Element
-                                        key={`${id}-columnItemIndex-aaa`}
+                                        key={columnItem.id.toString()}
                                         columnItem={columnItem}
                                         columnItemIndex={columnItemIndex}
                                         columns={columns}

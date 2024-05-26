@@ -16,7 +16,7 @@ interface IOption {
   choiceHandler?: (props: Array<z.infer<typeof propSchema>>) => void;
   props: Array<{
     name: string;
-    type: "React" | "string" | "image" | "boolean" | "code" | "enum";
+    type: "React" | "string" | "image" | "checkbox" | "code" | "enum";
     description?: string;
   }>;
   label: string;
@@ -242,7 +242,10 @@ const AddElementModal: FC<IProps> = ({ open, handleClose, options }) => {
 
                     {prop.type === "enum" ? (
                       <Select
-                        value={prop.value}
+                        value={
+                          prop.value ??
+                          JSON.parse(prop.description ?? "[]")[0].value
+                        }
                         size="small"
                         fullWidth
                         sx={{
@@ -277,7 +280,7 @@ const AddElementModal: FC<IProps> = ({ open, handleClose, options }) => {
                       </Select>
                     ) : prop.type === "string" ? (
                       <TextField
-                        value={prop.value}
+                        value={prop.value ?? ""}
                         size="small"
                         fullWidth
                         sx={{
