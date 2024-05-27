@@ -1,1 +1,12 @@
-const Container=e=>e.createElement("div",{style:{width:"100%",minWidth:"200px",maxWidth:"400px",minHeight:"40px",border:"1px solid grey",borderRadius:"8px"}});export default Container;
+const Container = (e) =>
+  e.createElement("div", {
+    style: {
+      width: "100%",
+      padding: "12px",
+      marginTop: "20px",
+      minHeight: "20px",
+      border: "1px solid grey",
+      borderRadius: "5px",
+    },
+  });
+export default Container;

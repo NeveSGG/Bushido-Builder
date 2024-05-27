@@ -3,11 +3,19 @@ import Icon from "@mui/material/Icon";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
+import CloseIcon from "@mui/icons-material/Close";
 import StepLabel from "@mui/material/StepLabel";
 import Button, { ButtonProps, buttonClasses } from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { MenuItem, Modal, Select, Stack, TextField } from "@mui/material";
+import {
+  IconButton,
+  MenuItem,
+  Modal,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { z } from "zod";
 import { propSchema } from "@/utils/schemas/treeSchema";
 
@@ -126,6 +134,20 @@ const AddElementModal: FC<IProps> = ({ open, handleClose, options }) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={{ ...style, width: 1200 }}>
+        <IconButton
+          sx={{
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            borderRadius: "5px",
+          }}
+          color="secondary"
+          size="small"
+          onClick={handleClose}
+        >
+          <CloseIcon />
+        </IconButton>
+
         <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};

@@ -76,7 +76,7 @@ const EditElementModal: FC<IProps> = ({
                 gap: "30px",
               }}
             >
-              <Typography>{prop.name}</Typography>
+              <Typography>{prop.label}</Typography>
 
               {prop.type === "enum" ? (
                 <Select
@@ -144,8 +144,8 @@ const EditElementModal: FC<IProps> = ({
           justifyContent="space-between"
           marginTop="20px"
         >
-          <Button onClick={handleReset} color="error">
-            Отменить все изменения
+          <Button onClick={handleClose} variant="text">
+            Отменить
           </Button>
 
           <Button

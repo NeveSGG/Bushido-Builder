@@ -47,18 +47,7 @@ import AddElementModal from "@/modals/AddElementModal";
 import Element from "./Element";
 import EditElementModal from "@/modals/EditElementModal";
 import DeleteElementModal from "@/modals/DeleteElementModal";
-
-function reorder<T>(
-  list: Array<T>,
-  startIndex: number,
-  endIndex: number
-): Array<T> {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-}
+import Previewer from "./Previewer";
 
 const Builder: FC = () => {
   const [treeLoading, setTreeLoading] = useState<boolean>(true);
@@ -102,6 +91,8 @@ const Builder: FC = () => {
   >("info");
 
   const [tree, setTree] = useState<z.infer<typeof treeSchema> | null>(null);
+
+  const [previewerOpen, setPreviewerOpen] = useState<boolean>(false);
 
   useEffect(() => {
     resetServerContext();
@@ -406,7 +397,7 @@ const Builder: FC = () => {
 
                   <Button
                     variant="outlined"
-                    onClick={() => {}}
+                    onClick={() => setPreviewerOpen(true)}
                     sx={{ justifyContent: "flex-start" }}
                     size="small"
                     color="success"
@@ -939,6 +930,21 @@ const Builder: FC = () => {
           setUnsavedChanges(true);
           setElementIndexToDelete(null);
           setDeleteElementModalOpen(false);
+        }}
+      />
+
+      <Previewer
+        open={previewerOpen}
+        onClose={() => setPreviewerOpen(false)}
+        onSuccess={(msg: string) => {
+          setNotificationMsg(msg);
+          setNotificationStatus("success");
+          setNotificationOpened(true);
+        }}
+        onError={(msg: string) => {
+          setNotificationMsg(msg);
+          setNotificationStatus("error");
+          setNotificationOpened(true);
         }}
       />
 

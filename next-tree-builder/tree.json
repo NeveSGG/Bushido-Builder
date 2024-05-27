@@ -1,5 +1,81 @@
 [
     {
+        "id": 361607,
+        "name": "Container",
+        "attributes": [
+            {
+                "name": "data-container-type",
+                "value": 3
+            }
+        ],
+        "props": [],
+        "children": [
+            {
+                "id": 199852,
+                "name": "Text",
+                "attributes": [],
+                "props": [
+                    {
+                        "name": "textAlignment",
+                        "label": "Выраванивание",
+                        "type": "enum",
+                        "description": "[{\"label\":\"По левому краю\",\"value\":\"left\"},{\"label\":\"По центру\",\"value\":\"center\"},{\"label\":\"По правому краю\",\"value\":\"right\"}]",
+                        "value": null
+                    },
+                    {
+                        "name": "text",
+                        "label": "Текст",
+                        "type": "string",
+                        "value": "aaaa"
+                    }
+                ],
+                "children": []
+            },
+            {
+                "id": 657107,
+                "name": "Text",
+                "attributes": [],
+                "props": [
+                    {
+                        "name": "textAlignment",
+                        "label": "Выраванивание",
+                        "type": "enum",
+                        "description": "[{\"label\":\"По левому краю\",\"value\":\"left\"},{\"label\":\"По центру\",\"value\":\"center\"},{\"label\":\"По правому краю\",\"value\":\"right\"}]",
+                        "value": null
+                    },
+                    {
+                        "name": "text",
+                        "label": "Текст",
+                        "type": "string",
+                        "value": "qqq"
+                    }
+                ],
+                "children": []
+            },
+            {
+                "id": 359776,
+                "name": "Text",
+                "attributes": [],
+                "props": [
+                    {
+                        "name": "textAlignment",
+                        "label": "Выраванивание",
+                        "type": "enum",
+                        "description": "[{\"label\":\"По левому краю\",\"value\":\"left\"},{\"label\":\"По центру\",\"value\":\"center\"},{\"label\":\"По правому краю\",\"value\":\"right\"}]",
+                        "value": "right"
+                    },
+                    {
+                        "name": "text",
+                        "label": "Текст",
+                        "type": "string",
+                        "value": "ssss"
+                    }
+                ],
+                "children": []
+            }
+        ]
+    },
+    {
         "id": 146867,
         "name": "Container",
         "attributes": [
@@ -20,7 +96,7 @@
                         "label": "Выраванивание",
                         "type": "enum",
                         "description": "[{\"label\":\"По левому краю\",\"value\":\"left\"},{\"label\":\"По центру\",\"value\":\"center\"},{\"label\":\"По правому краю\",\"value\":\"right\"}]",
-                        "value": "right"
+                        "value": "center"
                     },
                     {
                         "name": "text",
@@ -32,7 +108,7 @@
                 "children": []
             },
             {
-                "id": 564771,
+                "id": 176662,
                 "name": "Void",
                 "attributes": [],
                 "props": [],
