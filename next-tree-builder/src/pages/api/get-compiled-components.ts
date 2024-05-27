@@ -7,7 +7,7 @@ import { z } from "zod";
 
 type ImportPromiseResolveType = (val: any) => void;
 const componentsDir = path.join(__dirname, "compiledComponents");
-const componentsToSkip = new Set<string>(["Void"]);
+const componentsToSkip = new Set<string>([]);
 
 function getFunctionBody(f: string) {
   const matches = f.match(
@@ -71,7 +71,7 @@ const importComponentDynamically = (componentPath: string): Promise<string> => {
         res(module.default.toString());
       })
       .catch((err) => {
-        rej(err);
+        rej({ ...err, path: `/compiledComponents/${componentPath}/index.js` });
       });
   });
 };

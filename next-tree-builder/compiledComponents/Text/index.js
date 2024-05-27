@@ -4,6 +4,7 @@ const Container = (react, textAlignment, text) => {
     {
       style: {
         textAlign: textAlignment,
+        flex: "1 1 100%",
       },
     },
     text

@@ -47,7 +47,7 @@ const Output: FC<OutputProps> = ({ compiledComponents, treeItem }) => {
   const { name } = treeItem;
   const defaultFunc = compiledComponents.get(name);
 
-  if (!defaultFunc || name === "Void") return undefined;
+  if (!defaultFunc) return undefined;
 
   const attributes = treeItem.attributes.reduce((acc, attr) => {
     acc[attr.name] = attr.value;
