@@ -16,7 +16,8 @@ interface IOption {
   choiceHandler?: (props: Array<z.infer<typeof propSchema>>) => void;
   props: Array<{
     name: string;
-    type: "React" | "string" | "image" | "checkbox" | "code" | "enum";
+    label: string;
+    type: "react" | "string" | "image" | "checkbox" | "code" | "enum";
     description?: string;
   }>;
   label: string;
@@ -238,7 +239,7 @@ const AddElementModal: FC<IProps> = ({ open, handleClose, options }) => {
                       gap: "30px",
                     }}
                   >
-                    <Typography>{prop.name}</Typography>
+                    <Typography>{prop.label}</Typography>
 
                     {prop.type === "enum" ? (
                       <Select

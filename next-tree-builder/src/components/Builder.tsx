@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useState, MouseEvent } from "react";
+import React, { FC, useEffect, useState, MouseEvent } from "react";
 import {
   Alert,
   Box,
@@ -43,7 +43,7 @@ import {
   treeSchema,
 } from "@/utils/schemas/treeSchema";
 import { z } from "zod";
-import AddElementModal, { CustomMuiButtonBase } from "@/modals/AddElementModal";
+import AddElementModal from "@/modals/AddElementModal";
 import Element from "./Element";
 import EditElementModal from "@/modals/EditElementModal";
 import DeleteElementModal from "@/modals/DeleteElementModal";
@@ -159,8 +159,8 @@ const Builder: FC = () => {
       case "droppable-container": {
         setTree((oldTree) => {
           const newItems = Array.from(oldTree!);
-          const [reOrdered] = newItems.splice(sourceIndex - 1, 1);
-          newItems.splice(destIndex - 1, 0, reOrdered);
+          const [reOrdered] = newItems.splice(sourceIndex, 1);
+          newItems.splice(destIndex, 0, reOrdered);
           return newItems;
         });
         setUnsavedChanges(true);
@@ -842,14 +842,16 @@ const Builder: FC = () => {
             },
             props: [
               {
-                name: "Выравнивание",
+                name: "textAlignment",
+                label: "Выраванивание",
                 type: "enum",
                 description:
                   '[{"label":"По левому краю","value":"left"},{"label":"По центру","value":"center"},{"label":"По правому краю","value":"right"}]',
               },
               {
-                name: "Текст",
+                name: "text",
                 type: "string",
+                label: "Текст",
               },
             ],
             label: "Текст",

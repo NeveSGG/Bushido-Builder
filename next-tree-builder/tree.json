@@ -1,51 +1,38 @@
 [
     {
-        "id": 605351,
+        "id": 146867,
         "name": "Container",
         "attributes": [
             {
                 "name": "data-container-type",
-                "value": 3
+                "value": 2
             }
         ],
         "props": [],
         "children": [
             {
-                "id": 779108,
-                "name": "Void",
+                "id": 442242,
+                "name": "Text",
                 "attributes": [],
-                "props": [],
+                "props": [
+                    {
+                        "name": "textAlignment",
+                        "label": "Выраванивание",
+                        "type": "enum",
+                        "description": "[{\"label\":\"По левому краю\",\"value\":\"left\"},{\"label\":\"По центру\",\"value\":\"center\"},{\"label\":\"По правому краю\",\"value\":\"right\"}]",
+                        "value": "right"
+                    },
+                    {
+                        "name": "text",
+                        "label": "Текст",
+                        "type": "string",
+                        "value": "zzzzzz"
+                    }
+                ],
                 "children": []
             },
             {
-                "id": 407566,
-                "name": "Void",
-                "attributes": [],
-                "props": [],
-                "children": []
-            },
-            {
-                "id": 475630,
-                "name": "Void",
-                "attributes": [],
-                "props": [],
-                "children": []
-            }
-        ]
-    },
-    {
-        "id": 352382,
-        "name": "Container",
-        "attributes": [
-            {
-                "name": "data-container-type",
-                "value": 1
-            }
-        ],
-        "props": [],
-        "children": [
-            {
-                "id": 576227,
+                "id": 564771,
                 "name": "Void",
                 "attributes": [],
                 "props": [],

@@ -42,7 +42,6 @@ const EditElementModal: FC<IProps> = ({
     useState<Array<z.infer<typeof propSchema>>>(props);
 
   useEffect(() => {
-    console.log(props);
     if (!open) {
       setFilledData([]);
     } else {

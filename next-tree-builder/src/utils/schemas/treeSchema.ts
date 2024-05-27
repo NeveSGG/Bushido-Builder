@@ -7,7 +7,8 @@ const attributeSchema = z.object({
 
 export const propSchema = z.object({
   name: z.string(),
-  type: z.enum(["React", "string", "image", "checkbox", "code", "enum"]),
+  label: z.string(),
+  type: z.enum(["react", "string", "image", "checkbox", "code", "enum"]),
   description: z.string().optional(),
   value: z.any(),
 });
