@@ -47,7 +47,7 @@ import AddElementModal from "@/modals/AddElementModal";
 import Element from "./Element";
 import EditElementModal from "@/modals/EditElementModal";
 import DeleteElementModal from "@/modals/DeleteElementModal";
-import Previewer from "./Previewer/Previewer";
+import Previewer from "./Previewer";
 
 const Builder: FC = () => {
   const [treeLoading, setTreeLoading] = useState<boolean>(true);

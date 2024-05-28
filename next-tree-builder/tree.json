@@ -32,6 +32,47 @@
                 "children": []
             },
             {
+                "id": 811559,
+                "name": "Image",
+                "attributes": [],
+                "props": [
+                    {
+                        "name": "path",
+                        "label": "Путь",
+                        "type": "string",
+                        "value": "/favicon.ico"
+                    }
+                ],
+                "children": []
+            },
+            {
+                "id": 462917,
+                "name": "Void",
+                "attributes": [],
+                "props": [],
+                "children": []
+            }
+        ]
+    },
+    {
+        "id": 146867,
+        "name": "Container",
+        "attributes": [
+            {
+                "name": "data-container-type",
+                "value": 2
+            }
+        ],
+        "props": [],
+        "children": [
+            {
+                "id": 176662,
+                "name": "Void",
+                "attributes": [],
+                "props": [],
+                "children": []
+            },
+            {
                 "id": 657107,
                 "name": "Text",
                 "attributes": [],
@@ -50,68 +91,6 @@
                         "value": "qqq"
                     }
                 ],
-                "children": []
-            },
-            {
-                "id": 359776,
-                "name": "Text",
-                "attributes": [],
-                "props": [
-                    {
-                        "name": "textAlignment",
-                        "label": "Выраванивание",
-                        "type": "enum",
-                        "description": "[{\"label\":\"По левому краю\",\"value\":\"left\"},{\"label\":\"По центру\",\"value\":\"center\"},{\"label\":\"По правому краю\",\"value\":\"right\"}]",
-                        "value": "right"
-                    },
-                    {
-                        "name": "text",
-                        "label": "Текст",
-                        "type": "string",
-                        "value": "ssss"
-                    }
-                ],
-                "children": []
-            }
-        ]
-    },
-    {
-        "id": 146867,
-        "name": "Container",
-        "attributes": [
-            {
-                "name": "data-container-type",
-                "value": 2
-            }
-        ],
-        "props": [],
-        "children": [
-            {
-                "id": 442242,
-                "name": "Text",
-                "attributes": [],
-                "props": [
-                    {
-                        "name": "textAlignment",
-                        "label": "Выраванивание",
-                        "type": "enum",
-                        "description": "[{\"label\":\"По левому краю\",\"value\":\"left\"},{\"label\":\"По центру\",\"value\":\"center\"},{\"label\":\"По правому краю\",\"value\":\"right\"}]",
-                        "value": "center"
-                    },
-                    {
-                        "name": "text",
-                        "label": "Текст",
-                        "type": "string",
-                        "value": "zzzzzz"
-                    }
-                ],
-                "children": []
-            },
-            {
-                "id": 176662,
-                "name": "Void",
-                "attributes": [],
-                "props": [],
                 "children": []
             }
         ]
