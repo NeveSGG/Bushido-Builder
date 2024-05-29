@@ -10,7 +10,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 jest.mock("fs");
 
 describe("/api/edit-json-tree API Endpoint", () => {
-  const filePath = path.join(process.cwd(), "tree.json");
+  // const filePath = path.join(process.cwd(), "tree.json");
 
   afterEach(() => {
     jest.resetAllMocks();
